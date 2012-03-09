@@ -66,6 +66,7 @@ module Rush::Connection; end
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'rush/exceptions'
+require 'rush/base_commands'
 require 'rush/config'
 require 'rush/commands'
 require 'rush/access'

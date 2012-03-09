@@ -26,6 +26,7 @@ module Rush
 			$last_res = nil
 
 			eval @config.load_env, @pure_binding
+      eval "extend Rush::BaseCommands", @pure_binding
 
 			commands = @config.load_commands
 			Rush::Dir.class_eval commands

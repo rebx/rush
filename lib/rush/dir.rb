@@ -125,6 +125,28 @@ class Rush::Dir < Rush::Entry
 		box.bash "cd #{quoted_path} && #{command}", options
 	end
 
+  # Get the current working directory
+  def self.pwd
+    @@pwd ||= new(::Dir.pwd)
+  end
+
+  # Change to this directory
+  def chdir
+    # Ensure that the directory exists
+    stat
+
+    if box.host == "localhost"
+      ::Dir.chdir(to_s)
+    else
+      # cd away to avoid unexpected "resource busy" situations
+      ::Dir.chdir("/")
+    end
+    @@pwd = self
+    self
+  end
+
+  alias :cd :chdir
+
 	# Destroy all of the contents of the directory, leaving it fresh and clean.
 	def purge
 		connection.purge full_path
